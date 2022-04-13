@@ -3,8 +3,7 @@ import org.sonarqube.gradle.SonarQubeExtension
 plugins {
     id("com.android.library")
     kotlin("android")
-    kotlin("android.extensions")
-    id("org.sonarqube").version("2.7")
+    id("org.sonarqube").version("3.3")
 
 }
 
@@ -13,9 +12,10 @@ ext["kitDescription"] = "Media Api to supplement core SDK"
 apply(from= "../scripts/maven.gradle")
 
 android {
+    compileSdk = 31
     defaultConfig {
-        minSdkVersion(16)
-        compileSdkVersion(28)
+        minSdk = 16
+        targetSdk = 31
     }
 }
 
