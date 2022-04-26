@@ -1,5 +1,6 @@
 package com.mparticle.media
 
+import android.annotation.SuppressLint
 import com.mparticle.MPEvent
 import com.mparticle.MParticle
 import com.mparticle.media.events.*
@@ -455,6 +456,7 @@ class MediaSession protected constructor(builder: Builder) {
      * will be populated with the relevant {@link MediaContent} fields which belong to the MediaSession
      * instance. This includes "title", "mediaContentId", "duration", "streamType" and "contentType"
      */
+    @SuppressLint("DataplanViolation")
     fun buildMPEvent(eventName: String, customAttributes: Map<String, String>?): MPEvent {
         val eventAttributes = attributes
         customAttributes?.let { eventAttributes.putAll(it) }
