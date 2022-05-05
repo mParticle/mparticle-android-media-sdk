@@ -5,13 +5,16 @@ plugins {
 
 ext["kitDescription"] = "Media Api to supplement core SDK"
 
-apply(from= "../scripts/maven.gradle")
+apply(from= "../.scripts/maven.gradle")
 
 android {
     compileSdk = 31
     defaultConfig {
         minSdk = 16
         targetSdk = 31
+    }
+    lint {
+        abortOnError = false
     }
 }
 
