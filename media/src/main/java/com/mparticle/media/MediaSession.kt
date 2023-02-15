@@ -81,7 +81,7 @@ class MediaSession protected constructor(builder: Builder) {
         }
     private val mediaContentTimeSpent: Double
         get() { //total seconds spent playing content
-            return currentPlayheadPosition?.let {
+            return currentPlaybackStartTimestamp?.let {
                 this.storedPlaybackTime + (System.currentTimeMillis().minus(it) / 1000).toDouble()
             } ?: this.storedPlaybackTime
         }
