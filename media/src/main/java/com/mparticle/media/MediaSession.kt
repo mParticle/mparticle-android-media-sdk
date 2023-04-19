@@ -62,8 +62,14 @@ class MediaSession protected constructor(builder: Builder) {
         internal set
     var sessionQoS = MediaQoS()
 
+    var mediaSessionAttributes: MutableMap<String, Any?> = mutableMapOf()
+
     var attributes: MutableMap<String, Any?> = mutableMapOf()
-        get() = MediaEvent(this).getSessionAttributes()
+        get() { //Combine the inherent Session attributes and an custom mediaSessionAttributes
+            val mediaAttributes = MediaEvent(this).getSessionAttributes()
+            mediaAttributes.putAll(mediaSessionAttributes)
+            return mediaAttributes
+        }
         private set
 
     private var mparticleInstance: MParticle?
