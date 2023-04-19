@@ -209,15 +209,20 @@ class MediaSessionTest  {
         }
         testSessionMediaContentAttributes()
 
+        val testAttributes = HashMap<String, Any?>()
+        testAttributes["CustomAttributeKey"] = "CustomAttributeValue"
+        mediaSession.mediaSessionAttributes = testAttributes
+
         mediaSession.logMediaSessionStart()
         attributes = mediaSession.attributes
-        assertEquals(6, attributes.size)
+        assertEquals(7, attributes.size)
         assertNotNull(attributes[MediaAttributeKeys.MEDIA_SESSION_ID])
+        assertEquals(testAttributes["CustomAttributeKey"], attributes["CustomAttributeKey"])
 
         mediaSession.logPlayheadPosition(10L)
 
         attributes = mediaSession.attributes
-        assertEquals(7, attributes.size)
+        assertEquals(8, attributes.size)
         assertEquals(10L, attributes[MediaAttributeKeys.PLAYHEAD_POSITION])
 
         //make sure no other Media Sessions are started
@@ -225,7 +230,7 @@ class MediaSessionTest  {
 
 
         attributes = mediaSession.attributes
-        assertEquals(7, attributes.size)
+        assertEquals(8, attributes.size)
         assertNotNull(attributes[MediaAttributeKeys.PLAYHEAD_POSITION])
         assertNotNull(attributes[MediaAttributeKeys.MEDIA_SESSION_ID])
     }
