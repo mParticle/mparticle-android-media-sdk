@@ -1,3 +1,17 @@
+## [1.5.0](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.4.3...v1.5.0) (2023-05-22)
+
+
+### Features
+
+* Add Session Custom Attributes ([#25](https://github.com/mParticle/mparticle-android-media-sdk/issues/25)) ([653d8ad](https://github.com/mParticle/mparticle-android-media-sdk/commit/653d8ad57644e73d7909415307912dc17ee10166))
+
+
+### Updates & Maintenance
+
+* bump com.android.library from 7.4.1 to 7.4.2 ([#21](https://github.com/mParticle/mparticle-android-media-sdk/issues/21)) ([8316dc2](https://github.com/mParticle/mparticle-android-media-sdk/commit/8316dc2bbb10e8888a5e714b8a6aa203ef683469))
+* bump org.jlleitschuh.gradle.ktlint from 11.2.0 to 11.3.1 ([#22](https://github.com/mParticle/mparticle-android-media-sdk/issues/22)) ([a91250f](https://github.com/mParticle/mparticle-android-media-sdk/commit/a91250fff8f0b96dad2f7cdcec4a4864361890a9))
+* bump org.jlleitschuh.gradle.ktlint from 11.3.1 to 11.3.2 ([#27](https://github.com/mParticle/mparticle-android-media-sdk/issues/27)) ([03ae09f](https://github.com/mParticle/mparticle-android-media-sdk/commit/03ae09f167dbb3864ca17c1fcdfbfbd042045b6a))
+
 ## [1.4.3](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.4.2...v1.4.3) (2023-02-15)
 
 
