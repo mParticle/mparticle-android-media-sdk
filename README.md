@@ -49,6 +49,10 @@ Starting a MediaSession and logging events. The `MediaSession` fields `title`, `
         duration = 1000
         streamType = StreamType.LIVE_STEAM
         contentType = ContentType.VIDEO
+        // Optional custom media session attributes
+        mediaSession.mediaSessionAttributes = mutableMapOf(
+            "my_session_attribute" to "My Session Attribute"
+        )
     }
     
     //start the MediaSession
@@ -79,6 +83,22 @@ Including customAttributes in an event. Common customAttribute keys are availabl
         )
     mediaSession.logPlay(options)
 ```
+
+#### Custom media session attributes
+
+You can create custom media session attributes when initializing a new media session by including the custom media session attributes object directly in `MediaSession.builder`:
+
+```kotlin
+mediaSession.mediaSessionAttributes = mutableMapOf(
+    "my_session_attribute" to "My Session Attribute"
+)
+```
+
+Custom media session attributes are automatically propagated to all media events logged during the session in addition to the media session summary event. Since custom session attributes are propagated to any event (a media event, advertising event, or a custom events) that is logged during the session, you don’t need to set these attributes again when you trigger the start of a media session. Following are the limitations for custom media session attributes:
+
+* 100 key/value pairs per media session
+* Keys must be strings and cannot exceed 255 characters
+* Values may be strings, numbers, booleans, or dates, and cannot exceed 4096 characters
 
 #### Logging `MediaEvent`s as Custom Events (`MPEvent`) to the MParticle Server
 
