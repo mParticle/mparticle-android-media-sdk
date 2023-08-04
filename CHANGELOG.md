@@ -1,3 +1,20 @@
+## [1.5.1](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.0...v1.5.1) (2023-08-04)
+
+
+### Documentation
+
+* Add custom media session attributes docs to readme ([#37](https://github.com/mParticle/mparticle-android-media-sdk/issues/37)) ([016f5f1](https://github.com/mParticle/mparticle-android-media-sdk/commit/016f5f1f50d01a585d7a4cccb5be02b07e0bfab2))
+
+
+### Updates & Maintenance
+
+* bump android from 1.8.10 to 1.8.22 ([#34](https://github.com/mParticle/mparticle-android-media-sdk/issues/34)) ([898b05e](https://github.com/mParticle/mparticle-android-media-sdk/commit/898b05e3332686f76c53ece60e4660dd0d6997aa))
+* bump android from 1.8.22 to 1.9.0 ([#40](https://github.com/mParticle/mparticle-android-media-sdk/issues/40)) ([0495303](https://github.com/mParticle/mparticle-android-media-sdk/commit/0495303d74c034e08d9fb11ee6688614079126c5))
+* bump org.jlleitschuh.gradle.ktlint from 11.3.2 to 11.4.0 ([#33](https://github.com/mParticle/mparticle-android-media-sdk/issues/33)) ([21b2497](https://github.com/mParticle/mparticle-android-media-sdk/commit/21b24973f928b91b00ba691e229d82cd6111feac))
+* bump org.jlleitschuh.gradle.ktlint from 11.4.0 to 11.4.1 ([#36](https://github.com/mParticle/mparticle-android-media-sdk/issues/36)) ([3377539](https://github.com/mParticle/mparticle-android-media-sdk/commit/337753967e17011c5be316d556efb9c602718ad2))
+* bump org.jlleitschuh.gradle.ktlint from 11.4.1 to 11.4.2 ([#38](https://github.com/mParticle/mparticle-android-media-sdk/issues/38)) ([1ac3f3a](https://github.com/mParticle/mparticle-android-media-sdk/commit/1ac3f3a2479a290acea030161f3ec987c72e7eac))
+* bump org.jlleitschuh.gradle.ktlint from 11.4.2 to 11.5.0 ([#39](https://github.com/mParticle/mparticle-android-media-sdk/issues/39)) ([fdebf1e](https://github.com/mParticle/mparticle-android-media-sdk/commit/fdebf1e39c80a167da195572c89589caac14445f))
+
 ## [1.5.0](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.4.3...v1.5.0) (2023-05-22)
 
 
