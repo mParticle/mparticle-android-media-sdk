@@ -137,6 +137,7 @@ class MediaSession protected constructor(builder: Builder) {
         var currentTimestamp = System.currentTimeMillis()
         mediaSessionStartTimestamp = currentTimestamp
         mediaSessionEndTimestamp = currentTimestamp
+        mediaSessionAttributes = builder.mediaSessionAttributes
     }
 
     /**
@@ -480,7 +481,7 @@ class MediaSession protected constructor(builder: Builder) {
         val eventAttributes = attributes
         customAttributes?.let { eventAttributes.putAll(it) }
         return MPEvent.Builder(eventName, MParticle.EventType.Media)
-            .customAttributes(customAttributes)
+            .customAttributes(eventAttributes)
             .build()
     }
 
@@ -654,11 +655,22 @@ class MediaSession protected constructor(builder: Builder) {
         var mediaContentCompleteLimit = 100
             @JvmSynthetic
             set
+        var mediaSessionAttributes: MutableMap<String, Any?> = mutableMapOf()
+            @JvmSynthetic
+            set
         /**
          * Set the Title of the {@link MediaContent} for this {@link MediaSession}
          */
         fun title(title: String): Builder {
             this.title = title
+            return this
+        }
+
+        /**
+         * Set media session attributes
+         */
+        fun mediaSessionAttributes(mediaSessionAttributes : MutableMap<String, Any?>): Builder{
+            this.mediaSessionAttributes = mediaSessionAttributes
             return this
         }
 

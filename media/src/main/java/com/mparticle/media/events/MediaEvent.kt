@@ -10,12 +10,12 @@ import kotlin.collections.HashMap
 
 
 open class MediaEvent(
-    session: MediaSession,
+    private val session: MediaSession,
     val eventName: String = "Unknown",
     val timeStamp: Long = System.currentTimeMillis(),
     val id: String = UUID.randomUUID().toString(),
     val options: Options? = null
-): BaseEvent(Type.MEDIA) {
+) : BaseEvent(Type.MEDIA) {
 
     var sessionId: String? = null
     var mediaContent: MediaContent
@@ -51,11 +51,11 @@ open class MediaEvent(
             }
         }
     }
-    
+
     fun toMPEvent(): MPEvent {
         val mediaAttributes = getSessionAttributes()
         mediaAttributes.putAll(getEventAttributes())
-        mediaAttributes.putAll(customAttributeStrings?: mapOf())
+        mediaAttributes.putAll(customAttributeStrings ?: mapOf())
         return MPEvent.Builder(eventName, MParticle.EventType.Media)
             .customAttributes(mediaAttributes)
             .build()
@@ -64,6 +64,9 @@ open class MediaEvent(
     internal fun getSessionAttributes(): MutableMap<String, Any?> {
         val sessionAttributes = HashMap<String, Any?>()
         sessionAttributes.putIfNotNull(MediaAttributeKeys.MEDIA_SESSION_ID, sessionId)
+        session.mediaSessionAttributes.forEach {
+            sessionAttributes.putIfNotNull(it.key, it.value)
+        }
 
         sessionAttributes.putIfNotNull(MediaAttributeKeys.PLAYHEAD_POSITION, playheadPosition)
         sessionAttributes.putIfNotNull(MediaAttributeKeys.TITLE, mediaContent.name)
@@ -140,41 +143,51 @@ open class MediaEvent(
             json.put("buffer position", it)
         }
         qos?.apply {
-            json.put("qos", JSONObject()
-                .put("bit rate", bitRate)
-                .put("dropped frames", droppedFrames)
-                .put("fps", fps)
-                .put("startup time", startupTime))
+            json.put(
+                "qos", JSONObject()
+                    .put("bit rate", bitRate)
+                    .put("dropped frames", droppedFrames)
+                    .put("fps", fps)
+                    .put("startup time", startupTime)
+            )
         }
-        mediaAd?.apply { 
-            json.put("media ad", JSONObject()
-                .put("title", title)
-                .put("id", id)
-                .put("advertiser", advertiser)
-                .put("campaign", campaign)
-                .put("creative", creative)
-                .put("siteId", siteId)
-                .put("duration", duration)
-                .put("placement", placement))
+        mediaAd?.apply {
+            json.put(
+                "media ad", JSONObject()
+                    .put("title", title)
+                    .put("id", id)
+                    .put("advertiser", advertiser)
+                    .put("campaign", campaign)
+                    .put("creative", creative)
+                    .put("siteId", siteId)
+                    .put("duration", duration)
+                    .put("placement", placement)
+            )
                 .put("position", position)
         }
         segment?.apply {
-            json.put("segment", JSONObject()
-                .put("title", title)
-                .put("index", index)
-                .put("duration", duration))
+            json.put(
+                "segment", JSONObject()
+                    .put("title", title)
+                    .put("index", index)
+                    .put("duration", duration)
+            )
         }
         adBreak?.apply {
-            json.put("adBreak", JSONObject()
-                .put("title", title)
-                .put("duration", duration))
+            json.put(
+                "adBreak", JSONObject()
+                    .put("title", title)
+                    .put("duration", duration)
+            )
         }
-        json.put("Media Content", JSONObject()
-            .put("name", mediaContent.name)
-            .put("id", mediaContent.contentId)
-            .put("duration", mediaContent.duration)
-            .put("stream type", mediaContent.streamType)
-            .put("content type", mediaContent.contentType))
+        json.put(
+            "Media Content", JSONObject()
+                .put("name", mediaContent.name)
+                .put("id", mediaContent.contentId)
+                .put("duration", mediaContent.duration)
+                .put("stream type", mediaContent.streamType)
+                .put("content type", mediaContent.contentType)
+        )
 
         json.put("session id", sessionId)
         json.put("timestamp", timeStamp)
@@ -186,7 +199,7 @@ open class MediaEvent(
         }
         return json.toString()
     }
-    
+
     fun <T> HashMap<String, T>.putIfNotNull(key: String, value: T?) {
         value?.also {
             put(key, it)
