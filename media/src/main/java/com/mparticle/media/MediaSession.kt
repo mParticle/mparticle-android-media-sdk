@@ -79,23 +79,29 @@ class MediaSession protected constructor(builder: Builder) {
     private var adContent: MediaAd? = null
     private var segment: MediaSegment? = null
 
-    private var mediaSessionStartTimestamp: Long //Timestamp created on logMediaSessionStart event
-    private var mediaSessionEndTimestamp: Long //Timestamp updated when any event is logged
-    private val mediaTimeSpent: Double
+    var mediaSessionStartTimestamp: Long //Timestamp created on logMediaSessionStart event
+        private set
+    var mediaSessionEndTimestamp: Long //Timestamp updated when any event is logged
+        private set
+    val mediaTimeSpent: Double
         get() { //total seconds between media session start and end time
             return ((this.mediaSessionEndTimestamp - mediaSessionStartTimestamp) / 1000).toDouble()
         }
-    private val mediaContentTimeSpent: Double
+    val mediaContentTimeSpent: Double
         get() { //total seconds spent playing content
             return currentPlaybackStartTimestamp?.let {
                 this.storedPlaybackTime + (System.currentTimeMillis().minus(it) / 1000).toDouble()
             } ?: this.storedPlaybackTime
         }
-    private var mediaContentCompleteLimit: Int = 100
-    private var mediaContentComplete: Boolean = false //Updates to true triggered by logMediaContentEnd (or if 90% or 95% of the content played), 0 or false if complete milestone not reached or a forced quit.
-    private var mediaSessionSegmentTotal: Int = 0 //number incremented with each logSegmentStart
-    private var mediaTotalAdTimeSpent: Double = 0.0 //total second sum of ad break time spent
-    private val mediaAdTimeSpentRate: Double
+    var mediaContentCompleteLimit: Int = 100
+        private set
+    var mediaContentComplete: Boolean = false //Updates to true triggered by logMediaContentEnd (or if 90% or 95% of the content played), 0 or false if complete milestone not reached or a forced quit.
+        private set
+    var mediaSessionSegmentTotal: Int = 0 //number incremented with each logSegmentStart
+        private set
+    var mediaTotalAdTimeSpent: Double = 0.0 //total second sum of ad break time spent
+        private set
+    val mediaAdTimeSpentRate: Double
         get() { //ad time spent / content time spent x 100
             return if (this.mediaContentTimeSpent != 0.0) {
                 this.mediaTotalAdTimeSpent / this.mediaContentTimeSpent * 100
@@ -103,11 +109,14 @@ class MediaSession protected constructor(builder: Builder) {
                 0.0
             }
         }
-    private var mediaSessionAdTotal: Int = 0 //number of ads played in the media session - increment on logAdStart
-    private var mediaSessionAdObjects: MutableList<String> = ArrayList() //array of unique identifiers for ads played in the media session - append ad_content_ID on logAdStart
-
-    private var currentPlaybackStartTimestamp: Long? = null //Timestamp for beginning of current playback
-    private var storedPlaybackTime: Double = 0.0 //On Pause calculate playback time and clear currentPlaybackTime
+    var mediaSessionAdTotal: Int = 0 //number of ads played in the media session - increment on logAdStart
+        private set
+    var mediaSessionAdObjects: MutableList<String> = ArrayList() //array of unique identifiers for ads played in the media session - append ad_content_ID on logAdStart
+        private set
+    var currentPlaybackStartTimestamp: Long? = null //Timestamp for beginning of current playback
+        private set
+    var storedPlaybackTime: Double = 0.0 //On Pause calculate playback time and clear currentPlaybackTime
+        private set
     private var sessionSummarySent = false // Ensures we only send summary event once
 
     private var testing = false // Enabled for test cases
