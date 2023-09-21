@@ -1,3 +1,12 @@
+## [1.5.2](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.1...v1.5.2) (2023-09-21)
+
+
+### Updates & Maintenance
+
+* bump android from 1.9.0 to 1.9.10 ([#46](https://github.com/mParticle/mparticle-android-media-sdk/issues/46)) ([39d5a50](https://github.com/mParticle/mparticle-android-media-sdk/commit/39d5a50ddd1818689bed91a5b12cb56f505a12a7))
+* bump org.jlleitschuh.gradle.ktlint from 11.5.0 to 11.5.1 ([#44](https://github.com/mParticle/mparticle-android-media-sdk/issues/44)) ([4d88e55](https://github.com/mParticle/mparticle-android-media-sdk/commit/4d88e55b92552d18432f2cf7a718a91faf312c6f))
+* bump org.jlleitschuh.gradle.ktlint from 11.5.1 to 11.6.0 ([#49](https://github.com/mParticle/mparticle-android-media-sdk/issues/49)) ([d511ca3](https://github.com/mParticle/mparticle-android-media-sdk/commit/d511ca3e186593cbb192493b32b379fc55f8f1ca))
+
 ## [1.5.1](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.0...v1.5.1) (2023-08-04)
 
 
