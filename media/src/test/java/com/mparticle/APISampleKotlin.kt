@@ -19,7 +19,7 @@ class APISampleKotlin {
             title = "Media Title"
             mediaContentId = "123"
             duration = 1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = false
