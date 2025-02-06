@@ -602,7 +602,7 @@ class MediaSession protected constructor(builder: Builder) {
         }
 
         mediaSessionEndTimestamp = System.currentTimeMillis()
-        if (mediaContentCompleteLimit < 100 && (duration != null && currentPlayheadPosition != null) && ((currentPlayheadPosition!! / duration!!) >= (mediaContentCompleteLimit / 100))) {
+        if (mediaContentCompleteLimit < 100 && (duration != null && currentPlayheadPosition != null) && ((currentPlayheadPosition!! / duration!!.toDouble()) >= (mediaContentCompleteLimit / 100.0))) {
             mediaContentComplete = true
         }
 
