@@ -601,8 +601,12 @@ class MediaSession protected constructor(builder: Builder) {
             mparticleInstance = MParticle.getInstance()
         }
 
+        // These local variables prevent the use of !! in the if statement that could potentially throw a NullPointerException.
+        val duration = this.duration
+        val currentPlayheadPosition = this.currentPlayheadPosition
+
         mediaSessionEndTimestamp = System.currentTimeMillis()
-        if (mediaContentCompleteLimit < 100 && (duration != null && currentPlayheadPosition != null) && ((currentPlayheadPosition!! / duration!!.toDouble()) >= (mediaContentCompleteLimit / 100.0))) {
+        if (mediaContentCompleteLimit < 100 && (duration != null && currentPlayheadPosition != null) && ((currentPlayheadPosition / duration.toDouble()) >= (mediaContentCompleteLimit / 100.0))) {
             mediaContentComplete = true
         }
 
