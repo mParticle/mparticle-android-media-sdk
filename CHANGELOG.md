@@ -1,3 +1,16 @@
+## [1.5.3](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.2...v1.5.3) (2025-02-18)
+
+
+### Bug Fixes
+
+* Fix mediaContentComplete calculation ([#66](https://github.com/mParticle/mparticle-android-media-sdk/issues/66)) ([#68](https://github.com/mParticle/mparticle-android-media-sdk/issues/68)) ([a7942be](https://github.com/mParticle/mparticle-android-media-sdk/commit/a7942be350cefd301152f9a2749578941ef0d68d))
+
+
+### Updates & Maintenance
+
+* bump org.jlleitschuh.gradle.ktlint from 11.6.0 to 11.6.1 ([#53](https://github.com/mParticle/mparticle-android-media-sdk/issues/53)) ([38e472d](https://github.com/mParticle/mparticle-android-media-sdk/commit/38e472d8a8574bc8ace5f7a85ea8437e06a5ae28))
+* Update to pin conventional commits version ([#69](https://github.com/mParticle/mparticle-android-media-sdk/issues/69)) ([ead941d](https://github.com/mParticle/mparticle-android-media-sdk/commit/ead941d0d4d1c5af072e80d72b465ca83e8f5087))
+
 ## [1.5.2](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.1...v1.5.2) (2023-09-21)
 
 
