@@ -3,7 +3,6 @@ package com.mparticle
 import com.mparticle.media.MediaSession
 import com.mparticle.media.events.*
 import com.mparticle.testutils.RandomUtils
-import com.mparticle.testutils.TestingUtils
 import junit.framework.Assert.*
 import org.junit.Test
 import java.lang.reflect.Method
@@ -23,7 +22,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = random.nextBoolean()
@@ -50,7 +49,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = false
@@ -74,7 +73,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = true
@@ -96,7 +95,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId = "123"
             duration = 1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
         }
 
@@ -125,7 +124,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId = "123"
             duration = 1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
         }
 
@@ -164,7 +163,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = false
@@ -281,7 +280,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = random.nextBoolean()
@@ -348,7 +347,7 @@ class MediaSessionTest  {
             title = "hello"
             mediaContentId ="123"
             duration =1000
-            streamType = StreamType.LIVE_STEAM
+            streamType = StreamType.LIVE_STREAM
             contentType = ContentType.VIDEO
 
             logMediaEvents = random.nextBoolean()

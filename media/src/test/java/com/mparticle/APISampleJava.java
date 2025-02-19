@@ -8,8 +8,6 @@ import com.mparticle.media.events.StreamType;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
@@ -23,7 +21,7 @@ public class APISampleJava {
                 .title("Media Title ")
                 .mediaContentId("abc123")
                 .contentType(ContentType.AUDIO)
-                .streamType(StreamType.LIVE_STEAM)
+                .streamType(StreamType.LIVE_STREAM)
                 .build();
     }
 
