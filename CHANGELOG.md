@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.3...v1.5.4) (2025-02-27)
+
+
+### Bug Fixes
+
+* **typo:** `StreamType.LIVE_STREAM` typo ([#65](https://github.com/mParticle/mparticle-android-media-sdk/issues/65)) ([b696dd7](https://github.com/mParticle/mparticle-android-media-sdk/commit/b696dd7989a0387aaa609257c8e5ffe5e5a0c676))
+
 ## [1.5.3](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.2...v1.5.3) (2025-02-18)
 
 
