@@ -1,3 +1,37 @@
+## [1.5.4](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.3...v1.5.4) (2025-02-27)
+
+
+### Bug Fixes
+
+* **typo:** `StreamType.LIVE_STREAM` typo ([#65](https://github.com/mParticle/mparticle-android-media-sdk/issues/65)) ([b696dd7](https://github.com/mParticle/mparticle-android-media-sdk/commit/b696dd7989a0387aaa609257c8e5ffe5e5a0c676))
+
+## [1.5.3](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.2...v1.5.3) (2025-02-18)
+
+
+### Bug Fixes
+
+* Fix mediaContentComplete calculation ([#66](https://github.com/mParticle/mparticle-android-media-sdk/issues/66)) ([#68](https://github.com/mParticle/mparticle-android-media-sdk/issues/68)) ([a7942be](https://github.com/mParticle/mparticle-android-media-sdk/commit/a7942be350cefd301152f9a2749578941ef0d68d))
+
+
+### Updates & Maintenance
+
+* 1.5.3 (release) ([74f9cd4](https://github.com/mParticle/mparticle-android-media-sdk/commit/74f9cd4970043ded50a1278b3c5fa2f7f5c99fa6)), closes [#66](https://github.com/mParticle/mparticle-android-media-sdk/issues/66) [#68](https://github.com/mParticle/mparticle-android-media-sdk/issues/68) [#53](https://github.com/mParticle/mparticle-android-media-sdk/issues/53) [#69](https://github.com/mParticle/mparticle-android-media-sdk/issues/69)
+* bump org.jlleitschuh.gradle.ktlint from 11.6.0 to 11.6.1 ([#53](https://github.com/mParticle/mparticle-android-media-sdk/issues/53)) ([38e472d](https://github.com/mParticle/mparticle-android-media-sdk/commit/38e472d8a8574bc8ace5f7a85ea8437e06a5ae28))
+* Update to pin conventional commits version ([#69](https://github.com/mParticle/mparticle-android-media-sdk/issues/69)) ([ead941d](https://github.com/mParticle/mparticle-android-media-sdk/commit/ead941d0d4d1c5af072e80d72b465ca83e8f5087))
+
+## [1.5.3](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.2...v1.5.3) (2025-02-18)
+
+
+### Bug Fixes
+
+* Fix mediaContentComplete calculation ([#66](https://github.com/mParticle/mparticle-android-media-sdk/issues/66)) ([#68](https://github.com/mParticle/mparticle-android-media-sdk/issues/68)) ([a7942be](https://github.com/mParticle/mparticle-android-media-sdk/commit/a7942be350cefd301152f9a2749578941ef0d68d))
+
+
+### Updates & Maintenance
+
+* bump org.jlleitschuh.gradle.ktlint from 11.6.0 to 11.6.1 ([#53](https://github.com/mParticle/mparticle-android-media-sdk/issues/53)) ([38e472d](https://github.com/mParticle/mparticle-android-media-sdk/commit/38e472d8a8574bc8ace5f7a85ea8437e06a5ae28))
+* Update to pin conventional commits version ([#69](https://github.com/mParticle/mparticle-android-media-sdk/issues/69)) ([ead941d](https://github.com/mParticle/mparticle-android-media-sdk/commit/ead941d0d4d1c5af072e80d72b465ca83e8f5087))
+
 ## [1.5.2](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.1...v1.5.2) (2023-09-21)
 
 
