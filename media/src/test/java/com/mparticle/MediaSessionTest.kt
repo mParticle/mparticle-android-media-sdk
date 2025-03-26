@@ -521,7 +521,7 @@ class MediaSessionTest  {
         // 1s delay added to account for the time spent on media content.
         Thread.sleep(1000)
         mediaSession.logPause()
-        // Another 1s delay added after logMediaContentEnd is triggered to
+        // Another 1s delay added after logPause is triggered to
         // account for time spent on media session (total = 2s).
         Thread.sleep(1000)
         mediaSession.logMediaSessionEnd()
