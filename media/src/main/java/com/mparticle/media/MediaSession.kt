@@ -174,6 +174,10 @@ class MediaSession protected constructor(builder: Builder) {
      */
     fun logMediaContentEnd(options: Options? = null) {
         mediaContentComplete = true
+        currentPlaybackStartTimestamp?.let {
+            storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
+            currentPlaybackStartTimestamp = null;
+        }
         val mediaSessionEvent = MediaEvent(this, MediaEventName.CONTENT_END, options = options)
         logEvent(mediaSessionEvent)
     }
