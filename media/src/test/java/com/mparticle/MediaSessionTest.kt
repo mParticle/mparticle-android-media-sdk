@@ -502,7 +502,6 @@ class MediaSessionTest  {
         val testContentTimeSpent = mediaSession.mediaContentTimeSpent
         val testTimeSpent = mediaSession.mediaTimeSpent
 
-        println(testContentTimeSpent)
         assertNotEquals(testContentTimeSpent, testTimeSpent)
         assertEquals(testContentTimeSpent, 1.0)
         assertEquals(testTimeSpent, 2.0)
