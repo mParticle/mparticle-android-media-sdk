@@ -1,3 +1,10 @@
+## [1.5.5](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.4...v1.5.5) (2025-03-28)
+
+
+### Bug Fixes
+
+* Pause mediaContentTimeSpent when logMediaContentEnd is triggered ([#70](https://github.com/mParticle/mparticle-android-media-sdk/issues/70)) ([497af13](https://github.com/mParticle/mparticle-android-media-sdk/commit/497af13ef34643589affa1e812e57cf6f695ff34))
+
 ## [1.5.4](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.3...v1.5.4) (2025-02-27)
 
 
