@@ -4,6 +4,8 @@ import com.mparticle.media.MediaSession
 import com.mparticle.media.events.*
 import com.mparticle.testutils.RandomUtils
 import junit.framework.Assert.*
+import org.junit.Assert
+import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import java.lang.reflect.Method
 import java.util.*
@@ -476,6 +478,60 @@ class MediaSessionTest  {
         override fun logEvent(baseEvent: BaseEvent) {
             loggedEvents.add(baseEvent)
         }
+    }
+
+    @Test
+    fun testLogMediaContentEnd() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        // logPlay is triggered to start media content time tracking.
+        mediaSession.logPlay()
+        // 1s delay added to account for the time spent on media content.
+        Thread.sleep(1000)
+        mediaSession.logMediaContentEnd()
+        // Another 1s delay added after logMediaContentEnd is triggered to
+        // account for time spent on media session (total = 2s).
+        Thread.sleep(1000)
+        mediaSession.logMediaSessionEnd()
+
+        val testContentTimeSpent = mediaSession.mediaContentTimeSpent
+        val testTimeSpent = mediaSession.mediaTimeSpent
+
+        assertNotEquals(testContentTimeSpent, testTimeSpent)
+        assertEquals(testContentTimeSpent, 1.0)
+        assertEquals(testTimeSpent, 2.0)
+    }
+
+    @Test
+    fun testLogPause() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        // logPlay is triggered to start media content time tracking.
+        mediaSession.logPlay()
+        // 1s delay added to account for the time spent on media content.
+        Thread.sleep(1000)
+        mediaSession.logPause()
+        // Another 1s delay added after logPause is triggered to
+        // account for time spent on media session (total = 2s).
+        Thread.sleep(1000)
+        mediaSession.logMediaSessionEnd()
+
+        val testContentTimeSpent = mediaSession.mediaContentTimeSpent
+        val testTimeSpent = mediaSession.mediaTimeSpent
+
+        assertNotEquals(testContentTimeSpent, testTimeSpent)
+        assertEquals(testContentTimeSpent, 1.0)
+        assertEquals(testTimeSpent, 2.0)
     }
 }
 
