@@ -545,7 +545,7 @@ class MediaSession protected constructor(builder: Builder) {
                 sessionId?.let {
                     customAttributes[mediaSessionIdKey] = it
                 }
-                customAttributes[mediaContentId] = mediaContentId
+                customAttributes[contentIdKey] = mediaContentId
                 customAttributes[segmentIndexKey] = segmentSummary.index.toString()
                 segmentSummary.title?.let {
                     customAttributes[segmentTitleKey] = it
