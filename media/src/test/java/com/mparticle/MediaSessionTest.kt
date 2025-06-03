@@ -1,5 +1,6 @@
 package com.mparticle
 
+import com.mparticle.media.MediaSegmentSummary
 import com.mparticle.media.MediaSession
 import com.mparticle.media.events.*
 import com.mparticle.testutils.RandomUtils
@@ -462,6 +463,64 @@ class MediaSessionTest  {
         events[7].assertTrue { it.eventName == MediaEventName.AD_CLICK && it.mediaAd!!.id == "ad 2" }
         events[8].assertTrue { it.eventName == MediaEventName.AD_END }
         events[9].assertTrue { it.eventName == MediaEventName.AD_BREAK_END}
+    }
+
+    @Test
+    fun testLogSegmentSummary() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        val events = mutableListOf<MediaEvent>()
+        mediaSession.mediaEventListener = { event ->
+            events.add(event)
+        }
+
+        mediaSession.logSegmentStart{}
+
+        mediaSession.logSegmentEnd()
+        assertEquals(2, events.size)
+        events.forEach {
+            it.mediaContent.apply {
+                assertEquals("hello", name)
+                assertEquals("123", contentId)
+                assertEquals(1000L, duration)
+            }
+        }
+        assertNotNull(mparticle.loggedEvents[2].customAttributes)
+        assertNotNull(mparticle.loggedEvents[2].customAttributes?.get("content_id"))
+        assertEquals("123",mparticle.loggedEvents[2].customAttributes?.get("content_id"))
+    }
+
+    @Test
+    fun testLogSegmentSummary_When_Content_ID_IS_NULL() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            duration =1000
+        }
+
+        val events = mutableListOf<MediaEvent>()
+        mediaSession.mediaEventListener = { event ->
+            events.add(event)
+        }
+
+        mediaSession.logSegmentStart{}
+
+        mediaSession.logSegmentEnd()
+        assertEquals(2, events.size)
+        events.forEach {
+            it.mediaContent.apply {
+                assertEquals("hello", name)
+                assertEquals(1000L, duration)
+            }
+        }
+        assertNotNull(mparticle.loggedEvents[2].customAttributes)
+        assertNotNull(mparticle.loggedEvents[2].customAttributes?.get("content_id"))
+        assertEquals("",mparticle.loggedEvents[2].customAttributes?.get("content_id"))
     }
 
     fun BaseEvent.isPlayheadEvent(): Boolean {
