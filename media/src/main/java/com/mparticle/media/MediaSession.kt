@@ -78,6 +78,7 @@ class MediaSession protected constructor(builder: Builder) {
 
     private var adContent: MediaAd? = null
     private var segment: MediaSegment? = null
+    private var mediaAdBreak: MediaAdBreak? = null
 
     var mediaSessionStartTimestamp: Long //Timestamp created on logMediaSessionStart event
         private set
@@ -283,6 +284,7 @@ class MediaSession protected constructor(builder: Builder) {
         val adBreakEvent = MediaEvent(this, MediaEventName.AD_BREAK_START, options = options).apply {
             this.adBreak = adBreak
         }
+        mediaAdBreak = adBreak
         logEvent(adBreakEvent)
     }
 
@@ -337,6 +339,9 @@ class MediaSession protected constructor(builder: Builder) {
             mediaTotalAdTimeSpent += ((endTime - startTime) / 1000)
         }
         val adEndEvent = MediaEvent(this, MediaEventName.AD_END, options = options)
+        mediaAdBreak?.let {
+            adContent?.adBreakId = it.id
+        }
         logEvent(adEndEvent)
 
         logAdSummary(adContent)
@@ -589,6 +594,9 @@ class MediaSession protected constructor(builder: Builder) {
             }
             ad.title?.let {
                 customAttributes[adContentTitleKey] = it
+            }
+            ad.adBreakId?.let {
+                customAttributes[adBreakIdKey] = it
             }
             customAttributes[adContentSkippedKey] = ad.adSkipped.toString()
             customAttributes[adContentCompletedKey] = ad.adCompleted.toString()

@@ -592,6 +592,70 @@ class MediaSessionTest  {
         assertEquals(testContentTimeSpent, 1.0)
         assertEquals(testTimeSpent, 2.0)
     }
+
+    @Test
+    fun testLogAdSummary() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        val events = mutableListOf<MediaEvent>()
+        mediaSession.mediaEventListener = { event ->
+            events.add(event)
+        }
+        mediaSession.logAdStart {  }
+        mediaSession.logAdBreakStart {
+            id = "123456"
+            title = "TestADBREAk"
+        }
+        mediaSession.logAdEnd()
+        mediaSession.logAdBreakEnd()
+        assertEquals(4, events.size)
+        events.forEach {
+            it.mediaContent.apply {
+                assertEquals("hello", name)
+                assertEquals("123", contentId)
+                assertEquals(1000L, duration)
+            }
+        }
+        assertNotNull(mparticle.loggedEvents[3].customAttributes)
+        assertNotNull(mparticle.loggedEvents[3].customAttributes?.get("ad_break_id"))
+        assertEquals("123456",mparticle.loggedEvents[3].customAttributes?.get("ad_break_id"))
+    }
+
+    @Test
+    fun testLogAdSummary_When_Break_ID_IS_NULL() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        val events = mutableListOf<MediaEvent>()
+        mediaSession.mediaEventListener = { event ->
+            events.add(event)
+        }
+        mediaSession.logAdStart {  }
+        mediaSession.logAdBreakStart {
+            title = "TestADBREAk"
+        }
+        mediaSession.logAdEnd()
+        mediaSession.logAdBreakEnd()
+        assertEquals(4, events.size)
+        events.forEach {
+            it.mediaContent.apply {
+                assertEquals("hello", name)
+                assertEquals("123", contentId)
+                assertEquals(1000L, duration)
+            }
+        }
+        assertNotNull(mparticle.loggedEvents[3].customAttributes)
+        assertNull(mparticle.loggedEvents[3].customAttributes?.get("ad_break_id"))
+    }
 }
 
 fun <T: Any> T.assertTrue(assertion: (T) -> Boolean) {

@@ -176,6 +176,7 @@ open class MediaEvent(
         adBreak?.apply {
             json.put(
                 "adBreak", JSONObject()
+                    .put("id",id)
                     .put("title", title)
                     .put("duration", duration)
             )

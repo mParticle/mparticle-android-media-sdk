@@ -19,5 +19,6 @@ class MediaAd(
     internal var adStartTimestamp: Long? = null,
     internal var adEndTimestamp: Long? = null,
     internal var adSkipped: Boolean = false,
-    internal var adCompleted: Boolean = false
+    internal var adCompleted: Boolean = false,
+    internal var adBreakId: String? = null
 )
