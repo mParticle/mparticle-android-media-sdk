@@ -1,3 +1,11 @@
+## [1.5.6](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.5...v1.5.6) (2025-06-12)
+
+
+### Bug Fixes
+
+* Correct the mapping of the mediaContentId key in the segment summary event ([#72](https://github.com/mParticle/mparticle-android-media-sdk/issues/72)) ([dad43eb](https://github.com/mParticle/mparticle-android-media-sdk/commit/dad43eb73ad36326f15e837821852a86ea3b9bd0))
+* handle ad_break_id key in the ad Summary event ([#71](https://github.com/mParticle/mparticle-android-media-sdk/issues/71)) ([228a831](https://github.com/mParticle/mparticle-android-media-sdk/commit/228a83150294254c9c66fb08fb0ba8d5e27022af))
+
 ## [1.5.5](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.4...v1.5.5) (2025-03-28)
 
 
