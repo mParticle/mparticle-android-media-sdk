@@ -85,8 +85,8 @@ class MediaSession protected constructor(builder: Builder) {
     var mediaSessionEndTimestamp: Long //Timestamp updated when any event is logged
         private set
     val mediaTimeSpent: Double
-        get() { //total seconds between media session start and end time
-            return ((this.mediaSessionEndTimestamp - mediaSessionStartTimestamp) / 1000).toDouble()
+        get() { //total seconds between media session start and current timestamp
+            return ((System.currentTimeMillis() - mediaSessionStartTimestamp) / 1000).toDouble()
         }
     val mediaContentTimeSpent: Double
         get() { //total seconds spent playing content
