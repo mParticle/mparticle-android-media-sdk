@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.6...v1.6.0) (2025-06-27)
+
+
+### Features
+
+* Calculate mediaTimeSpent based on current time ([#73](https://github.com/mParticle/mparticle-android-media-sdk/issues/73)) ([5f589f0](https://github.com/mParticle/mparticle-android-media-sdk/commit/5f589f0585ab9dcb0db809ca8552d6495a9d84c1))
+
 ## [1.5.6](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.5...v1.5.6) (2025-06-12)
 
 
