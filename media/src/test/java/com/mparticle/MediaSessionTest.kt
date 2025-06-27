@@ -540,6 +540,29 @@ class MediaSessionTest  {
     }
 
     @Test
+    fun testMediaTimeSpent() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+        }
+
+        // logPlay is triggered to start media content time tracking.
+        mediaSession.logPlay()
+        // 1s delay added to account for the time spent on media content.
+        Thread.sleep(1000)
+        mediaSession.logPause()
+        // Another 1s delay added after logPause is triggered to
+        // account for time spent on media session (total = 2s).
+        Thread.sleep(1000)
+
+        // mediaTimeSpent should be = 2s even though the last media event logged was 1s ago
+        val testTimeSpent = mediaSession.mediaTimeSpent
+        assertEquals(testTimeSpent, 2.0)
+    }
+
+    @Test
     fun testLogMediaContentEnd() {
         val mparticle = MockMParticle()
         val mediaSession = MediaSession.builder(mparticle) {
