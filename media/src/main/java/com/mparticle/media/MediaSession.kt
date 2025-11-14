@@ -1,6 +1,5 @@
 package com.mparticle.media
 
-import android.annotation.SuppressLint
 import com.mparticle.MPEvent
 import com.mparticle.MParticle
 import com.mparticle.media.events.*
@@ -75,6 +74,7 @@ class MediaSession protected constructor(builder: Builder) {
     private var mparticleInstance: MParticle?
     private var logMPEvents: Boolean
     private var logMediaEvents: Boolean
+    private var excludeAdBreaksFromContentTime: Boolean = false
 
     private var adContent: MediaAd? = null
     private var segment: MediaSegment? = null
@@ -140,6 +140,7 @@ class MediaSession protected constructor(builder: Builder) {
         streamType = builder.streamType.require("streamType")
         logMPEvents = builder.logMPEvents
         logMediaEvents = builder.logMediaEvents
+        this.excludeAdBreaksFromContentTime = builder.excludeAdBreaksFromContentTime
         if ( 100 >= builder.mediaContentCompleteLimit && builder.mediaContentCompleteLimit > 0) {
             mediaContentCompleteLimit = builder.mediaContentCompleteLimit
         }
@@ -281,6 +282,7 @@ class MediaSession protected constructor(builder: Builder) {
      * @param adBreak the {@link MediaAdBreak} instance
      */
     fun logAdBreakStart(adBreak: MediaAdBreak, options: Options? = null) {
+        pauseContentTimeIfAdBreakExclusionEnabled()
         val adBreakEvent = MediaEvent(this, MediaEventName.AD_BREAK_START, options = options).apply {
             this.adBreak = adBreak
         }
@@ -292,6 +294,7 @@ class MediaSession protected constructor(builder: Builder) {
      * Log a MediaEvent of type {@link MediaEventName.AD_BREAK_END}
      */
     fun logAdBreakEnd(options: Options? = null) {
+        resumeContentTimeIfAdBreakExclusionEnabled()
         val adBreakEvent = MediaEvent(this, MediaEventName.AD_BREAK_END, options = options)
         logEvent(adBreakEvent)
     }
@@ -571,6 +574,23 @@ class MediaSession protected constructor(builder: Builder) {
         }
     }
 
+    private fun pauseContentTimeIfAdBreakExclusionEnabled() {
+        if (!excludeAdBreaksFromContentTime) {
+            currentPlaybackStartTimestamp?.let {
+                storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
+                currentPlaybackStartTimestamp = null
+            }
+        }
+    }
+
+    private fun resumeContentTimeIfAdBreakExclusionEnabled() {
+        if (!excludeAdBreaksFromContentTime) {
+            if (currentPlaybackStartTimestamp != null) {
+                currentPlaybackStartTimestamp = System.currentTimeMillis()
+            }
+        }
+    }
+
     private fun logAdSummary(content: MediaAd?) {
         content?.let { ad ->
             ad.adStartTimestamp?.let { startTime ->
@@ -679,6 +699,9 @@ class MediaSession protected constructor(builder: Builder) {
         var mediaSessionAttributes: MutableMap<String, Any?> = mutableMapOf()
             @JvmSynthetic
             set
+        var excludeAdBreaksFromContentTime: Boolean = false
+            @JvmSynthetic
+            set
         /**
          * Set the Title of the {@link MediaContent} for this {@link MediaSession}
          */
@@ -750,6 +773,15 @@ class MediaSession protected constructor(builder: Builder) {
          */
         fun mediaContentCompleteLimit(contentCompleteLimit: Int): Builder {
             this.mediaContentCompleteLimit = contentCompleteLimit
+            return this
+        }
+
+        /**
+         * When enabled, automatically pauses content time tracking during ad breaks and resumes after.
+         * When disabled (default), ad break time is included in content time spent.
+         */
+        fun pauseContentDuringAdBreaks(shouldPause: Boolean): Builder {
+            this.excludeAdBreaksFromContentTime = shouldPause
             return this
         }
 

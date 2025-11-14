@@ -1,11 +1,9 @@
 package com.mparticle
 
-import com.mparticle.media.MediaSegmentSummary
 import com.mparticle.media.MediaSession
 import com.mparticle.media.events.*
 import com.mparticle.testutils.RandomUtils
 import junit.framework.Assert.*
-import org.junit.Assert
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
 import java.lang.reflect.Method
@@ -678,6 +676,60 @@ class MediaSessionTest  {
         }
         assertNotNull(mparticle.loggedEvents[3].customAttributes)
         assertNull(mparticle.loggedEvents[3].customAttributes?.get("ad_break_id"))
+    }
+
+    @Test
+    fun testContentTimeExcludesAdBreak_When_Flag_Disable() {
+        val mparticle = MockMParticle()
+        val events = mutableListOf<MediaEvent>()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+            excludeAdBreaksFromContentTime = false
+        }
+        mediaSession.mediaEventListener = { events.add(it) }
+
+        mediaSession.logPlay()
+        Thread.sleep(1000)
+        mediaSession.logAdBreakStart {
+            id = "break-1"
+        }
+        Thread.sleep(1000) // should NOT count toward content time
+        mediaSession.logPause()
+        mediaSession.logAdBreakEnd()
+
+
+        val contentTime = mediaSession.mediaContentTimeSpent
+        assertEquals(1.0, contentTime)
+
+        val playCount = events.count { it.eventName == MediaEventName.PLAY }
+        val pauseCount = events.count { it.eventName == MediaEventName.PAUSE }
+        assertEquals(1, playCount)
+        assertEquals(1, pauseCount)
+    }
+
+    @Test
+    fun testDefaultBehavior_Unchanged_When_Flag_Enable() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+            excludeAdBreaksFromContentTime = true
+        }
+
+        mediaSession.logPlay()
+        Thread.sleep(1000)
+        mediaSession.logAdBreakStart {
+            id = "break-2"
+        }
+        Thread.sleep(1000) // should count toward content time when flag disabled
+        mediaSession.logAdBreakEnd()
+        mediaSession.logPause()
+
+        val contentTime = mediaSession.mediaContentTimeSpent
+        assertEquals(2.0, contentTime)
     }
 }
 
