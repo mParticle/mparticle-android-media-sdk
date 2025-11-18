@@ -695,13 +695,13 @@ class MediaSessionTest  {
         mediaSession.logAdBreakStart {
             id = "break-1"
         }
-        Thread.sleep(1000) // should NOT count toward content time
+        Thread.sleep(1000) 
         mediaSession.logPause()
         mediaSession.logAdBreakEnd()
 
 
         val contentTime = mediaSession.mediaContentTimeSpent
-        assertEquals(1.0, contentTime)
+        assertEquals(2.0, contentTime, 0.2)
 
         val playCount = events.count { it.eventName == MediaEventName.PLAY }
         val pauseCount = events.count { it.eventName == MediaEventName.PAUSE }
@@ -729,7 +729,7 @@ class MediaSessionTest  {
         mediaSession.logPause()
 
         val contentTime = mediaSession.mediaContentTimeSpent
-        assertEquals(2.0, contentTime)
+        assertEquals(1.0, contentTime, 0.2)
     }
 }
 

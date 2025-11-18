@@ -575,7 +575,7 @@ class MediaSession protected constructor(builder: Builder) {
     }
 
     private fun pauseContentTimeIfAdBreakExclusionEnabled() {
-        if (!excludeAdBreaksFromContentTime) {
+        if (excludeAdBreaksFromContentTime) {
             currentPlaybackStartTimestamp?.let {
                 storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
                 currentPlaybackStartTimestamp = null
@@ -584,7 +584,7 @@ class MediaSession protected constructor(builder: Builder) {
     }
 
     private fun resumeContentTimeIfAdBreakExclusionEnabled() {
-        if (!excludeAdBreaksFromContentTime) {
+        if (excludeAdBreaksFromContentTime) {
             if (currentPlaybackStartTimestamp != null) {
                 currentPlaybackStartTimestamp = System.currentTimeMillis()
             }
@@ -777,10 +777,10 @@ class MediaSession protected constructor(builder: Builder) {
         }
 
         /**
-         * When enabled, automatically pauses content time tracking during ad breaks and resumes after.
+         * When enabled, ad break time is excluded from content time tracking.
          * When disabled (default), ad break time is included in content time spent.
          */
-        fun pauseContentDuringAdBreaks(shouldPause: Boolean): Builder {
+        fun excludeAdBreaksFromContentTime(shouldPause: Boolean): Builder {
             this.excludeAdBreaksFromContentTime = shouldPause
             return this
         }
