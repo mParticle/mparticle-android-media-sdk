@@ -119,6 +119,7 @@ class MediaSession protected constructor(builder: Builder) {
     var storedPlaybackTime: Double = 0.0 //On Pause calculate playback time and clear currentPlaybackTime
         private set
     private var sessionSummarySent = false // Ensures we only send summary event once
+    private var pausedByAdBreak: Boolean = false // Tracks if content was paused by an ad break (for resume logic)
 
     private var testing = false // Enabled for test cases
 
@@ -579,15 +580,21 @@ class MediaSession protected constructor(builder: Builder) {
             currentPlaybackStartTimestamp?.let {
                 storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
                 currentPlaybackStartTimestamp = null
+                pausedByAdBreak = true
+            } ?: run {
+                // Content was already paused, don't mark as paused by ad break
+                pausedByAdBreak = false
             }
         }
     }
 
     private fun resumeContentTimeIfAdBreakExclusionEnabled() {
         if (excludeAdBreaksFromContentTime) {
-            if (currentPlaybackStartTimestamp != null) {
+            // Only resume if content was paused by the ad break, not if it was already paused
+            if (pausedByAdBreak && currentPlaybackStartTimestamp == null) {
                 currentPlaybackStartTimestamp = System.currentTimeMillis()
             }
+            pausedByAdBreak = false
         }
     }
 
