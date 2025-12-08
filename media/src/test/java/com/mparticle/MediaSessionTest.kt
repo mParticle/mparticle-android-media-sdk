@@ -679,7 +679,7 @@ class MediaSessionTest  {
     }
 
     @Test
-    fun testContentTimeExcludesAdBreak_When_Flag_Disable() {
+    fun testExcludeAdBreaksFromContentTime_Default_Disabled_IncludesAdTime() {
         val mparticle = MockMParticle()
         val events = mutableListOf<MediaEvent>()
         val mediaSession = MediaSession.builder(mparticle) {
@@ -710,7 +710,7 @@ class MediaSessionTest  {
     }
 
     @Test
-    fun testDefaultBehavior_Unchanged_When_Flag_Enable() {
+    fun testExcludeAdBreaksFromContentTime_Enabled_ExcludesAdTime() {
         val mparticle = MockMParticle()
         val mediaSession = MediaSession.builder(mparticle) {
             title = "hello"
@@ -724,9 +724,35 @@ class MediaSessionTest  {
         mediaSession.logAdBreakStart {
             id = "break-2"
         }
-        Thread.sleep(1000) // should count toward content time when flag disabled
+        Thread.sleep(1000)
         mediaSession.logAdBreakEnd()
         mediaSession.logPause()
+
+        val contentTime = mediaSession.mediaContentTimeSpent
+        assertEquals(1.0, contentTime, 0.2)
+    }
+
+    @Test
+    fun testExcludeAdBreaksFromContentTime_UserPausesMidAd_ThenAdBreakEnds() {
+        val mparticle = MockMParticle()
+        val mediaSession = MediaSession.builder(mparticle) {
+            title = "hello"
+            mediaContentId ="123"
+            duration =1000
+            excludeAdBreaksFromContentTime = true
+        }
+
+        mediaSession.logPlay()
+        Thread.sleep(1000)
+
+        mediaSession.logAdBreakStart {
+            id = "break-3"
+        }
+        Thread.sleep(1000)
+
+        mediaSession.logPause()
+
+        mediaSession.logAdBreakEnd()
 
         val contentTime = mediaSession.mediaContentTimeSpent
         assertEquals(1.0, contentTime, 0.2)
