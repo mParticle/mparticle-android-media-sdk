@@ -91,7 +91,7 @@ class MediaSession protected constructor(builder: Builder) {
     val mediaContentTimeSpent: Double
         get() { //total seconds spent playing content
             return currentPlaybackStartTimestamp?.let {
-                this.storedPlaybackTime + (System.currentTimeMillis().minus(it) / 1000).toDouble()
+                this.storedPlaybackTime + (System.currentTimeMillis() - it) / 1000.0
             } ?: this.storedPlaybackTime
         }
     var mediaContentCompleteLimit: Int = 100
@@ -119,6 +119,7 @@ class MediaSession protected constructor(builder: Builder) {
     var storedPlaybackTime: Double = 0.0 //On Pause calculate playback time and clear currentPlaybackTime
         private set
     private var sessionSummarySent = false // Ensures we only send summary event once
+    private var playbackState: PlaybackState = PlaybackState.PAUSED_BY_USER // Tracks whether playback was playing, paused, or paused by ad break
 
     private var testing = false // Enabled for test cases
 
@@ -191,6 +192,8 @@ class MediaSession protected constructor(builder: Builder) {
         if (currentPlaybackStartTimestamp == null) {
             currentPlaybackStartTimestamp = System.currentTimeMillis()
         }
+        
+        playbackState = PlaybackState.PLAYING
         val playEvent = MediaEvent(this, MediaEventName.PLAY, options = options)
         logEvent(playEvent)
     }
@@ -203,6 +206,8 @@ class MediaSession protected constructor(builder: Builder) {
             storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
             currentPlaybackStartTimestamp = null;
         }
+        
+        playbackState = PlaybackState.PAUSED_BY_USER
         val pauseEvent = MediaEvent(this, MediaEventName.PAUSE, options = options)
         logEvent(pauseEvent)
     }
@@ -575,28 +580,30 @@ class MediaSession protected constructor(builder: Builder) {
     }
 
     private fun pauseContentTimeIfAdBreakExclusionEnabled() {
-        if (!excludeAdBreaksFromContentTime) {
-            currentPlaybackStartTimestamp?.let {
-                storedPlaybackTime += ((System.currentTimeMillis() - it) / 1000)
-                currentPlaybackStartTimestamp = null
-            }
+        if (!excludeAdBreaksFromContentTime || playbackState != PlaybackState.PLAYING) return
+
+        currentPlaybackStartTimestamp?.let {
+            storedPlaybackTime += (System.currentTimeMillis() - it) / 1000.0
+            currentPlaybackStartTimestamp = null
+            playbackState = PlaybackState.PAUSED_BY_AD_BREAK
         }
     }
 
     private fun resumeContentTimeIfAdBreakExclusionEnabled() {
-        if (!excludeAdBreaksFromContentTime) {
-            if (currentPlaybackStartTimestamp != null) {
-                currentPlaybackStartTimestamp = System.currentTimeMillis()
-            }
-        }
+        if (!excludeAdBreaksFromContentTime || playbackState != PlaybackState.PAUSED_BY_AD_BREAK) return
+
+        currentPlaybackStartTimestamp = System.currentTimeMillis()
+        playbackState = PlaybackState.PLAYING
     }
 
     private fun logAdSummary(content: MediaAd?) {
         content?.let { ad ->
             ad.adStartTimestamp?.let { startTime ->
-                val endTime = System.currentTimeMillis()
-                ad.adEndTimestamp = endTime
-                mediaTotalAdTimeSpent += ((endTime - startTime) / 1000).toDouble()
+                val endTime = ad.adEndTimestamp ?: System.currentTimeMillis()
+                if (ad.adEndTimestamp == null) {
+                    ad.adEndTimestamp = endTime
+                    mediaTotalAdTimeSpent += ((endTime - startTime) / 1000).toDouble()
+                }
             }
 
             val customAttributes: MutableMap<String, String> = mutableMapOf()
@@ -777,10 +784,10 @@ class MediaSession protected constructor(builder: Builder) {
         }
 
         /**
-         * When enabled, automatically pauses content time tracking during ad breaks and resumes after.
+         * When enabled, ad break time is excluded from content time tracking.
          * When disabled (default), ad break time is included in content time spent.
          */
-        fun pauseContentDuringAdBreaks(shouldPause: Boolean): Builder {
+        fun excludeAdBreaksFromContentTime(shouldPause: Boolean): Builder {
             this.excludeAdBreaksFromContentTime = shouldPause
             return this
         }
@@ -793,6 +800,12 @@ class MediaSession protected constructor(builder: Builder) {
         }
     }
 
+}
+
+private enum class PlaybackState {
+    PLAYING,
+    PAUSED_BY_USER,
+    PAUSED_BY_AD_BREAK
 }
 
 private fun String?.require(variableName: String): String {
