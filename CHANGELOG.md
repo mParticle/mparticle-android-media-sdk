@@ -1,3 +1,20 @@
+## [1.7.0](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.6.0...v1.7.0) (2025-12-12)
+
+
+### Features
+
+* Update Media Content Time Spent Calculations with Ad Breaks ([#74](https://github.com/mParticle/mparticle-android-media-sdk/issues/74)) ([c455557](https://github.com/mParticle/mparticle-android-media-sdk/commit/c455557357edce6335903bb9c881d38a4abf1042))
+
+
+### Bug Fixes
+
+* adjust ad break exclusion logic ([#76](https://github.com/mParticle/mparticle-android-media-sdk/issues/76)) ([84b1493](https://github.com/mParticle/mparticle-android-media-sdk/commit/84b14937fe047884db3b7c0bd1829e4784da1c48))
+
+
+### Updates & Maintenance
+
+* Migrate from OSSRH to Central Publishing Portal ([#75](https://github.com/mParticle/mparticle-android-media-sdk/issues/75)) ([ac8de37](https://github.com/mParticle/mparticle-android-media-sdk/commit/ac8de37aa1197ca5b66234c885a7a696bd3cfedb))
+
 ## [1.6.0](https://github.com/mParticle/mparticle-android-media-sdk/compare/v1.5.6...v1.6.0) (2025-06-27)
 
 
