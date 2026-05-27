@@ -26,7 +26,9 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-    implementation("com.mparticle:android-core:[5.11.3,)")
+    // Bounded upper bound prevents resolving to 6.0.0-rc.1+ on Maven Central.
+    // See mparticle-android-sdk#710 for context.
+    implementation("com.mparticle:android-core:[5.11.3,6.0)")
 
     testImplementation(files("libs/test-utils.aar"))
     testImplementation(files("libs/java-json.jar"))
