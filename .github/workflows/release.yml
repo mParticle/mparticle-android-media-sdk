@@ -11,6 +11,7 @@ jobs:
   semantic-release:
     name: "Semantic Release"
     runs-on: macos-latest
+    environment: release
     env:
       GITHUB_TOKEN: ${{ secrets.MP_SEMANTIC_RELEASE_BOT }}
       GIT_AUTHOR_NAME: mparticle-automation
@@ -62,6 +63,7 @@ jobs:
     name: "Sonatype Release"
     needs: semantic-release
     runs-on: macos-latest
+    environment: release
     if: ${{ github.event.inputs.dryRun == 'false' }}
     env:
       sonatypeUsername: ${{ secrets.SONATYPE_NEXUS_USERNAME }}
