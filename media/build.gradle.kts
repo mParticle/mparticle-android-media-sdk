@@ -14,6 +14,14 @@ android {
         minSdk = 16
         targetSdk = 33
     }
+    // The published bytecode stays Java 8 whichever JDK runs the build.
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
     lint {
         abortOnError = true
     }
