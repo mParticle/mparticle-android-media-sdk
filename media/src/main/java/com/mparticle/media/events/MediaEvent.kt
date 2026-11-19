@@ -64,8 +64,8 @@ open class MediaEvent(
     internal fun getSessionAttributes(): MutableMap<String, Any?> {
         val sessionAttributes = HashMap<String, Any?>()
         sessionAttributes.putIfNotNull(MediaAttributeKeys.MEDIA_SESSION_ID, sessionId)
-        session.mediaSessionAttributes.forEach {
-            sessionAttributes.putIfNotNull(it.key, it.value)
+        for ((key, value) in session.mediaSessionAttributes) {
+            sessionAttributes.putIfNotNull(key, value)
         }
 
         sessionAttributes.putIfNotNull(MediaAttributeKeys.PLAYHEAD_POSITION, playheadPosition)
